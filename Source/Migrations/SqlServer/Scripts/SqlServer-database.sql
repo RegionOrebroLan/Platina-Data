@@ -1,0 +1,43 @@
+CREATE TABLE [Entries] (
+	[Id] INT IDENTITY (1, 1) NOT NULL,
+	[Created] DATETIME DEFAULT(GETDATE()) NOT NULL,
+	[Disabled] BIT DEFAULT(1) NOT NULL,
+	[DistinguishedName] NVARCHAR (400) NOT NULL,
+	[Guid] UNIQUEIDENTIFIER DEFAULT(NEWID()) NOT NULL,
+	[Identity] NVARCHAR (50) NOT NULL,
+	[Saved] DATETIME DEFAULT(GETDATE()) NOT NULL,
+	CONSTRAINT [PK_Entries] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Entries_DistinguishedName]
+	ON [Entries]([DistinguishedName] ASC);
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Entries_Guid]
+	ON [Entries]([Guid] ASC);
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Entries_Identity]
+	ON [dbo].[Entries]([Identity] ASC);
+GO
+
+CREATE TABLE [Organizations]
+(
+	[Id] INT NOT NULL,
+	[TelephoneNumber] NVARCHAR(20),
+	CONSTRAINT [PK_Organizations] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [FK_Organizations_Entries] FOREIGN KEY ([Id]) REFERENCES [Entries] ([Id])
+	ON DELETE CASCADE
+	ON UPDATE NO ACTION
+);
+GO
+
+CREATE TRIGGER [AfterOrganizationDelete] ON [Organizations]
+AFTER DELETE
+AS
+BEGIN
+	DELETE
+	FROM [Entries]
+	WHERE [Id] IN (SELECT [Id] FROM DELETED);
+END;

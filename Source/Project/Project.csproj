@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AssemblyName>RegionOrebroLan.Platina.Data</AssemblyName>
+		<AssemblyOriginatorKeyFile>$(SolutionDir).Global\Signing\StrongName.snk</AssemblyOriginatorKeyFile>
+		<Company>Region Örebro län</Company>
+		<Description>Database for Platina integration-data, Region Örebro län.</Description>
+		<LangVersion>Latest</LangVersion>
+		<RootNamespace>$(AssemblyName)</RootNamespace>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<VersionPrefix>0.0.0</VersionPrefix>
+		<VersionPrereleaseName>alpha</VersionPrereleaseName>
+	</PropertyGroup>
+	<PropertyGroup Label="Dependant values">
+		<AssemblyVersion>$(VersionPrefix).0</AssemblyVersion>
+		<FileVersion>$(VersionPrefix).0</FileVersion>
+		<Version>$(VersionPrefix)</Version>
+		<Version Condition="$(VersionPrereleaseName) != ''">$(Version)-$(VersionPrereleaseName)</Version>
+	</PropertyGroup>
+	<PropertyGroup Label="NuGet-Package">
+		<Authors>$(Company)</Authors>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/RegionOrebroLan/Platina-Data/</PackageProjectUrl>
+		<PackageReleaseNotes>https://github.com/RegionOrebroLan/Platina-Data/releases/</PackageReleaseNotes>
+		<PackageTags></PackageTags>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+	<Import Project="Build\Build.targets" />
+</Project>
