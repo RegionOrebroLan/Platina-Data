@@ -1,9 +1,9 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RegionOrebroLan.Platina.Data;
 using RegionOrebroLan.Platina.Data.DependencyInjection.Extensions;
-using System;
 
 namespace IntegrationTests.Helpers
 {

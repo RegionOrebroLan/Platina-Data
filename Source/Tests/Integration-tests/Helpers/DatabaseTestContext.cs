@@ -1,9 +1,9 @@
-﻿using IntegrationTests.Fakes;
+﻿using System;
+using IntegrationTests.Fakes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Internal;
 using RegionOrebroLan.Platina.Data;
-using System;
 
 namespace IntegrationTests.Helpers
 {

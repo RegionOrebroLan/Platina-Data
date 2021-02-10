@@ -1,10 +1,10 @@
+using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RegionOrebroLan.Platina.Data;
 using RegionOrebroLan.Platina.Data.DependencyInjection.Extensions;
-using System;
-using System.IO;
 
 namespace IntegrationTests.Helpers
 {

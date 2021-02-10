@@ -1,11 +1,11 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using IntegrationTests.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RegionOrebroLan.Platina.Data.Entities;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IntegrationTests
 {
