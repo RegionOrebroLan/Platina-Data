@@ -1,1 +1,8 @@
-<Project />
+<Project>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net5.0'">
+		<PackageReferenceVersion>5.0.3</PackageReferenceVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' Or '$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReferenceVersion>3.1.12</PackageReferenceVersion>
+	</PropertyGroup>
+</Project>
