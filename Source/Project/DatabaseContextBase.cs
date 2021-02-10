@@ -1,8 +1,10 @@
-using System;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
 using RegionOrebroLan.Platina.Data.Entities;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RegionOrebroLan.Platina.Data
 {
@@ -55,14 +57,11 @@ namespace RegionOrebroLan.Platina.Data
 			this.CreateEntryModel(modelBuilder);
 		}
 
-		public override int SaveChanges()
+		protected internal virtual void PrepareSaveChanges()
 		{
-			var entityEntries = this.ChangeTracker.Entries().Where(entityEntry => entityEntry.State == EntityState.Added || entityEntry.State == EntityState.Modified).ToArray();
-			var documents = entityEntries.Select(entityEntry => entityEntry.Entity).OfType<Document>().ToArray();
-
 			var now = this.SystemClock.UtcNow.UtcDateTime;
 
-			foreach(var entityEntry in entityEntries)
+			foreach(var entityEntry in this.ChangeTracker.Entries().Where(entityEntry => entityEntry.State == EntityState.Added || entityEntry.State == EntityState.Modified))
 			{
 				if(!(entityEntry.Entity is Document document))
 					continue;
@@ -75,8 +74,20 @@ namespace RegionOrebroLan.Platina.Data
 
 				document.Saved = now;
 			}
+		}
 
-			return base.SaveChanges();
+		public override int SaveChanges(bool acceptAllChangesOnSuccess)
+		{
+			this.PrepareSaveChanges();
+
+			return base.SaveChanges(acceptAllChangesOnSuccess);
+		}
+
+		public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new())
+		{
+			this.PrepareSaveChanges();
+
+			return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 
 		#endregion

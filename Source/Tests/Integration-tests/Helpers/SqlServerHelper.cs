@@ -1,6 +1,6 @@
+using Microsoft.Data.SqlClient;
 using System;
 using System.IO;
-using Microsoft.Data.SqlClient;
 
 namespace IntegrationTests.Helpers
 {

@@ -1,15 +1,16 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace IntegrationTests
 {
+	// ReSharper disable PossibleNullReferenceException
 	[TestClass]
 	[SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
 	public static class Global
@@ -19,10 +20,8 @@ namespace IntegrationTests
 		private static IConfiguration _configuration;
 		private static IHostEnvironment _hostEnvironment;
 		public const string DataDirectoryName = "DataDirectory";
-
-		// ReSharper disable PossibleNullReferenceException
 		public static readonly string ProjectDirectoryPath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
-		// ReSharper restore PossibleNullReferenceException
+		public static readonly string DataDirectoryPath = Path.Combine(ProjectDirectoryPath, "Data");
 
 		#endregion
 
@@ -95,4 +94,5 @@ namespace IntegrationTests
 
 		#endregion
 	}
+	// ReSharper restore PossibleNullReferenceException
 }
