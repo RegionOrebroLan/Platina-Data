@@ -340,9 +340,7 @@ ASALocalRun/
 healthchecksdb
 
 # Custom
-Source/.Global/Signing/*
-!Source/.Global/Signing/ReadMe.md
-!Source/.Global/Signing/StrongName.Development.snk
+StrongName.snk
 
-Source/Tests/Integration-tests/Data/*
-!Source/Tests/Integration-tests/Data/ReadMe.md
+Tests/Integration-tests/Data/*
+!Tests/Integration-tests/Data/ReadMe.md

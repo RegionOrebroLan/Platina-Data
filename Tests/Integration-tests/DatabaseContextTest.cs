@@ -161,7 +161,7 @@ namespace IntegrationTests
 				databaseTestContext.FakedSystemClock.UtcNow = created;
 				const int id = 10;
 
-				databaseContext.Add(new Document {Category = "Category-A", Id = id, Organization = "Organization-A"});
+				databaseContext.Add(new Document { Category = "Category-A", Id = id, Organization = "Organization-A" });
 				Assert.AreEqual(1, await databaseContext.SaveChangesAsync());
 				var document = databaseContext.Documents.First();
 				Assert.AreEqual(id, document.Id);
@@ -195,7 +195,7 @@ namespace IntegrationTests
 
 				const int id = 10;
 
-				databaseContext.Add(new Document {Category = "Category-A", Id = id, Organization = "Organization-A"});
+				databaseContext.Add(new Document { Category = "Category-A", Id = id, Organization = "Organization-A" });
 				Assert.AreEqual(1, await databaseContext.SaveChangesAsync());
 				var document = databaseContext.Documents.First();
 				Assert.AreEqual(id, document.Id);
@@ -228,7 +228,7 @@ namespace IntegrationTests
 
 				const int id = 10;
 
-				databaseContext.Add(new Document {Category = "Category-A", Id = id, Organization = "Organization-A"});
+				databaseContext.Add(new Document { Category = "Category-A", Id = id, Organization = "Organization-A" });
 				databaseContext.ChangeTracker.DetectChanges();
 				var numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State == EntityState.Added || entry.State == EntityState.Modified);
 				Assert.AreEqual(1, numberOfChanges);
@@ -266,7 +266,7 @@ namespace IntegrationTests
 				databaseTestContext.FakedSystemClock.UtcNow = created;
 				const int id = 10;
 
-				databaseContext.Add(new Document {Category = "Category-A", Id = id, Organization = "Organization-A"});
+				databaseContext.Add(new Document { Category = "Category-A", Id = id, Organization = "Organization-A" });
 				Assert.AreEqual(1, databaseContext.SaveChanges());
 				var document = databaseContext.Documents.First();
 				Assert.AreEqual(id, document.Id);
@@ -300,7 +300,7 @@ namespace IntegrationTests
 
 				const int id = 10;
 
-				databaseContext.Add(new Document {Category = "Category-A", Id = id, Organization = "Organization-A"});
+				databaseContext.Add(new Document { Category = "Category-A", Id = id, Organization = "Organization-A" });
 				Assert.AreEqual(1, databaseContext.SaveChanges());
 				var document = databaseContext.Documents.First();
 				Assert.AreEqual(id, document.Id);
@@ -333,7 +333,7 @@ namespace IntegrationTests
 
 				const int id = 10;
 
-				databaseContext.Add(new Document {Category = "Category-A", Id = id, Organization = "Organization-A"});
+				databaseContext.Add(new Document { Category = "Category-A", Id = id, Organization = "Organization-A" });
 				databaseContext.ChangeTracker.DetectChanges();
 				var numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State == EntityState.Added || entry.State == EntityState.Modified);
 				Assert.AreEqual(1, numberOfChanges);

@@ -1,6 +1,0 @@
-<Project>
-	<Import Project="..\Directory.Build.targets" />
-	<ItemGroup>
-		<ProjectReference Include="..\..\Project\Project.csproj" />
-	</ItemGroup>
-</Project>

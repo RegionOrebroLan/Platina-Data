@@ -13,11 +13,15 @@ With DatabaseContext you can create your own migrations.
 
 [![NuGet](https://img.shields.io/nuget/v/RegionOrebroLan.Platina.Data.svg?label=NuGet)](https://www.nuget.org/packages/RegionOrebroLan.Platina.Data)
 
-## Development
+## 1 Development
 
-### Migrations
+### 1.1 Signing
 
-#### Create migrations
+Drop the "StrongName.snk" file in the repository-root. The file should not be included in source control.
+
+### 1.2 Migrations
+
+#### 1.2.1 Create migrations
 
 We might want to create/recreate migrations. If we can accept data-loss we can recreate the migrations otherwhise we will have to update them.
 
@@ -37,7 +41,7 @@ If you want more migration-information you can add the -Verbose parameter:
 
 	Add-Migration Create -Context SqliteDatabaseContext -OutputDir Migrations/Sqlite -Project Project -StartupProject Sqlite -Verbose;
 
-#### Update migrations
+#### 1.2.2 Update migrations
 
 Copy all the commands below and run them in the Package Manager Console.
 
@@ -46,6 +50,6 @@ Copy all the commands below and run them in the Package Manager Console.
 	Add-Migration Update -Context SqlServerDatabaseContext -OutputDir Migrations/SqlServer -Project Project -StartupProject SqlServer;
 	Write-Host "Finnished";
 
-## Links
+## 2 Links
 
 - [Migrations with Multiple Providers](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/providers/)

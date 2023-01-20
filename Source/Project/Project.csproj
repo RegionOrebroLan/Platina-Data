@@ -1,28 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyName>RegionOrebroLan.Platina.Data</AssemblyName>
-		<AssemblyOriginatorKeyFile>$(SolutionDir).Global\Signing\StrongName.snk</AssemblyOriginatorKeyFile>
-		<Company>Region Örebro län</Company>
+		<AssemblyOriginatorKeyFile>$(SolutionDir)StrongName.snk</AssemblyOriginatorKeyFile>
+		<Authors>Region Örebro län</Authors>
+		<Company>$(Authors)</Company>
 		<Description>Database for Platina integration-data, Region Örebro län.</Description>
-		<LangVersion>Latest</LangVersion>
-		<RootNamespace>$(AssemblyName)</RootNamespace>
-		<TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
-		<VersionPrefix>0.0.2</VersionPrefix>
-		<VersionPrereleaseName>alpha</VersionPrereleaseName>
-	</PropertyGroup>
-	<PropertyGroup Label="Dependant values">
-		<AssemblyVersion>$(VersionPrefix).0</AssemblyVersion>
-		<FileVersion>$(VersionPrefix).0</FileVersion>
-		<Version>$(VersionPrefix)</Version>
-		<Version Condition="$(VersionPrereleaseName) != ''">$(Version)-$(VersionPrereleaseName)</Version>
-	</PropertyGroup>
-	<PropertyGroup Label="NuGet-Package">
-		<Authors>$(Company)</Authors>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<LangVersion>Latest</LangVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/RegionOrebroLan/Platina-Data/</PackageProjectUrl>
 		<PackageReleaseNotes>https://github.com/RegionOrebroLan/Platina-Data/releases/</PackageReleaseNotes>
 		<PackageTags></PackageTags>
+		<RootNamespace>$(AssemblyName)</RootNamespace>
+		<TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
+		<VersionPrefix>0.0.2</VersionPrefix>
+		<VersionSuffix>alpha</VersionSuffix>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
@@ -33,5 +25,13 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 	</ItemGroup>
-	<Import Project="Build\Build.targets" />
+	<Target Name="HandleAssemblyOriginatorKeyFile" BeforeTargets="BeforeBuild" Condition="$(SignAssembly) AND !Exists('$(AssemblyOriginatorKeyFile)')">
+		<PropertyGroup>
+			<_DevelopmentAssemblyOriginatorKeyFile>$(SolutionDir)StrongName.Development.snk</_DevelopmentAssemblyOriginatorKeyFile>
+		</PropertyGroup>
+		<Warning Text="The strong-name-key-file '$(AssemblyOriginatorKeyFile)' does not exist. The strong-name-key-file '$(_DevelopmentAssemblyOriginatorKeyFile)' is used instead." />
+		<PropertyGroup>
+			<AssemblyOriginatorKeyFile>$(_DevelopmentAssemblyOriginatorKeyFile)</AssemblyOriginatorKeyFile>
+		</PropertyGroup>
+	</Target>
 </Project>

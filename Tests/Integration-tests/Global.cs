@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -41,7 +42,7 @@ namespace IntegrationTests
 		{
 			var configurationBuilder = CreateConfigurationBuilder();
 
-			foreach(var path in jsonFilePaths)
+			foreach(var path in jsonFilePaths ?? Enumerable.Empty<string>())
 			{
 				configurationBuilder.AddJsonFile(path, true, true);
 			}
