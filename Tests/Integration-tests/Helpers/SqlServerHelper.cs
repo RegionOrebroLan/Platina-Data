@@ -17,7 +17,12 @@ namespace IntegrationTests.Helpers
 
 				if(string.IsNullOrEmpty(sqlConnectionStringBuilder.InitialCatalog))
 				{
-					var databaseFileName = sqlConnectionStringBuilder.AttachDBFilename.Replace($"|{Global.DataDirectoryName}|", string.Empty, StringComparison.OrdinalIgnoreCase).Trim('\\', '/');
+#if NETFRAMEWORK
+					var attachDbFileNameWithoutDataDirectorySubstitution = sqlConnectionStringBuilder.AttachDBFilename.Replace($"|{Global.DataDirectoryName}|", string.Empty);
+#else
+					var attachDbFileNameWithoutDataDirectorySubstitution = sqlConnectionStringBuilder.AttachDBFilename.Replace($"|{Global.DataDirectoryName}|", string.Empty, StringComparison.OrdinalIgnoreCase);
+#endif
+					var databaseFileName = attachDbFileNameWithoutDataDirectorySubstitution.Trim('\\', '/');
 					sqlConnectionStringBuilder.InitialCatalog = Path.Combine(dataDirectoryPath, databaseFileName);
 					connectionString = sqlConnectionStringBuilder.ConnectionString;
 				}
