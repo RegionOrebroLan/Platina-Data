@@ -230,7 +230,7 @@ namespace IntegrationTests
 
 				databaseContext.Add(new Document { Category = "Category-A", Id = id, Organization = "Organization-A" });
 				databaseContext.ChangeTracker.DetectChanges();
-				var numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State == EntityState.Added || entry.State == EntityState.Modified);
+				var numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State is EntityState.Added or EntityState.Modified);
 				Assert.AreEqual(1, numberOfChanges);
 				Assert.AreEqual(1, await databaseContext.SaveChangesAsync());
 				var document = databaseContext.Documents.First();
@@ -240,7 +240,7 @@ namespace IntegrationTests
 				document = databaseContext.Documents.First();
 				document.Category += " (some more)";
 				databaseContext.ChangeTracker.DetectChanges();
-				numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State == EntityState.Added || entry.State == EntityState.Modified);
+				numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State is EntityState.Added or EntityState.Modified);
 				Assert.AreEqual(1, numberOfChanges);
 				Assert.AreEqual(1, await databaseContext.SaveChangesAsync());
 				document = databaseContext.Documents.First();
@@ -335,7 +335,7 @@ namespace IntegrationTests
 
 				databaseContext.Add(new Document { Category = "Category-A", Id = id, Organization = "Organization-A" });
 				databaseContext.ChangeTracker.DetectChanges();
-				var numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State == EntityState.Added || entry.State == EntityState.Modified);
+				var numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State is EntityState.Added or EntityState.Modified);
 				Assert.AreEqual(1, numberOfChanges);
 				Assert.AreEqual(1, databaseContext.SaveChanges());
 				var document = databaseContext.Documents.First();
@@ -345,7 +345,7 @@ namespace IntegrationTests
 				document = databaseContext.Documents.First();
 				document.Category += " (some more)";
 				databaseContext.ChangeTracker.DetectChanges();
-				numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State == EntityState.Added || entry.State == EntityState.Modified);
+				numberOfChanges = databaseContext.ChangeTracker.Entries().Count(entry => entry.State is EntityState.Added or EntityState.Modified);
 				Assert.AreEqual(1, numberOfChanges);
 				Assert.AreEqual(1, databaseContext.SaveChanges());
 				document = databaseContext.Documents.First();
