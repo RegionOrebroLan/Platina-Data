@@ -16,9 +16,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{C8A33A85
 		StrongName.Development.snk = StrongName.Development.snk
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{2942CB0D-1877-49F8-9310-47D41777CED4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{7A2808BA-6C17-42DF-A0E1-06DF8096EFE8}"
+	ProjectSection(SolutionItems) = preProject
+		Migrations\.editorconfig = Migrations\.editorconfig
+		Migrations\Directory.Build.props = Migrations\Directory.Build.props
+		Migrations\Directory.Build.targets = Migrations\Directory.Build.targets
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project", "Source\Project\Project.csproj", "{B23F0E8B-5779-4416-83ED-FBA42B38DDE6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{654C07AA-76E9-4CE4-8CDC-6E565443AACB}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\.editorconfig = Samples\.editorconfig
+		Samples\Directory.Build.props = Samples\Directory.Build.props
+		Samples\Directory.Build.targets = Samples\Directory.Build.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{2942CB0D-1877-49F8-9310-47D41777CED4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{90508F30-74C3-4199-8364-952E6C8A1629}"
 	ProjectSection(SolutionItems) = preProject
@@ -27,20 +39,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{90508F30
 		Tests\Directory.Build.targets = Tests\Directory.Build.targets
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration-tests", "Tests\Integration-tests\Integration-tests.csproj", "{B20F4B8B-220F-45AF-8CED-3D30974B782C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".NET 6.0", "Samples\.NET 6.0\.NET 6.0.csproj", "{567B510F-B1E8-40B3-B1B4-00A49FB58B5C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unit-tests", "Tests\Unit-tests\Unit-tests.csproj", "{E61BB84F-222A-467C-B680-303C472AF353}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{7A2808BA-6C17-42DF-A0E1-06DF8096EFE8}"
-	ProjectSection(SolutionItems) = preProject
-		Migrations\.editorconfig = Migrations\.editorconfig
-		Migrations\Directory.Build.props = Migrations\Directory.Build.props
-		Migrations\Directory.Build.targets = Migrations\Directory.Build.targets
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".NET Core 3.1", "Samples\.NET Core 3.1\.NET Core 3.1.csproj", "{664AD57D-20BA-45E3-90AB-ED4892D75BA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sqlite", "Migrations\Sqlite\Sqlite.csproj", "{BB01B8EE-31F2-478C-8361-BDB49C522CAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlServer", "Migrations\SqlServer\SqlServer.csproj", "{DB227302-40DE-4F4C-85D5-1694E39533FE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project", "Source\Project\Project.csproj", "{B23F0E8B-5779-4416-83ED-FBA42B38DDE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration-tests", "Tests\Integration-tests\Integration-tests.csproj", "{B20F4B8B-220F-45AF-8CED-3D30974B782C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unit-tests", "Tests\Unit-tests\Unit-tests.csproj", "{E61BB84F-222A-467C-B680-303C472AF353}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +79,14 @@ Global
 		{DB227302-40DE-4F4C-85D5-1694E39533FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB227302-40DE-4F4C-85D5-1694E39533FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB227302-40DE-4F4C-85D5-1694E39533FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{567B510F-B1E8-40B3-B1B4-00A49FB58B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567B510F-B1E8-40B3-B1B4-00A49FB58B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567B510F-B1E8-40B3-B1B4-00A49FB58B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567B510F-B1E8-40B3-B1B4-00A49FB58B5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{664AD57D-20BA-45E3-90AB-ED4892D75BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{664AD57D-20BA-45E3-90AB-ED4892D75BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{664AD57D-20BA-45E3-90AB-ED4892D75BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{664AD57D-20BA-45E3-90AB-ED4892D75BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +97,8 @@ Global
 		{E61BB84F-222A-467C-B680-303C472AF353} = {90508F30-74C3-4199-8364-952E6C8A1629}
 		{BB01B8EE-31F2-478C-8361-BDB49C522CAF} = {7A2808BA-6C17-42DF-A0E1-06DF8096EFE8}
 		{DB227302-40DE-4F4C-85D5-1694E39533FE} = {7A2808BA-6C17-42DF-A0E1-06DF8096EFE8}
+		{567B510F-B1E8-40B3-B1B4-00A49FB58B5C} = {654C07AA-76E9-4CE4-8CDC-6E565443AACB}
+		{664AD57D-20BA-45E3-90AB-ED4892D75BA7} = {654C07AA-76E9-4CE4-8CDC-6E565443AACB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F181FA82-6FD3-449C-A86A-5C3C8F47CB96}
