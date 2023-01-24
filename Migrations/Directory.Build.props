@@ -1,6 +1,0 @@
-<Project>
-	<PropertyGroup>
-		<CheckEolTargetFramework>false</CheckEolTargetFramework>
-		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
-	</PropertyGroup>
-</Project>

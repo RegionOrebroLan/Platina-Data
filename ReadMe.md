@@ -21,33 +21,37 @@ Drop the "StrongName.snk" file in the repository-root. The file should not be in
 
 ### 1.2 Migrations
 
-#### 1.2.1 Create migrations
+We might want to create/recreate/update migrations. If we can accept data-loss we can recreate the migrations otherwhise we will have to update them. For each update we need to bump the migration-name suffix:
 
-We might want to create/recreate migrations. If we can accept data-loss we can recreate the migrations otherwhise we will have to update them.
+- Initial migration: "Function"
+- First update: "Function1"
+- Second update: "Function2"
 
 Copy all the commands below and run them in the Package Manager Console.
 
+If you want more migration-information you can add the -Verbose parameter:
+
+	Add-Migration Function -Context FunctionContext -OutputDir Some/Path/To/Your/Migrations -Project Project -StartupProject Project -Verbose;
+
+#### 1.2.1 Create migrations
+
 	Write-Host "Removing migrations...";
-	Remove-Migration -Context SqliteDatabaseContext -Force -Project Project -StartupProject Sqlite;
-	Remove-Migration -Context SqlServerDatabaseContext -Force -Project Project -StartupProject SqlServer;
+	Remove-Migration -Context SqliteDatabaseContext -Force -Project Project -StartupProject Project;
+	Remove-Migration -Context SqlServerDatabaseContext -Force -Project Project -StartupProject Project;
 	Write-Host "Removing current migrations-directory...";
 	Remove-Item "Project\Migrations" -ErrorAction Ignore -Force -Recurse;
 	Write-Host "Creating migrations...";
-	Add-Migration Create -Context SqliteDatabaseContext -OutputDir Migrations/Sqlite -Project Project -StartupProject Sqlite;
-	Add-Migration Create -Context SqlServerDatabaseContext -OutputDir Migrations/SqlServer -Project Project -StartupProject SqlServer;
+	Add-Migration Platina -Context SqliteDatabaseContext -OutputDir Migrations/Sqlite -Project Project -StartupProject Project;
+	Add-Migration Platina -Context SqlServerDatabaseContext -OutputDir Migrations/SqlServer -Project Project -StartupProject Project;
 	Write-Host "Finnished";
-
-If you want more migration-information you can add the -Verbose parameter:
-
-	Add-Migration Create -Context SqliteDatabaseContext -OutputDir Migrations/Sqlite -Project Project -StartupProject Sqlite -Verbose;
 
 #### 1.2.2 Update migrations
 
 Copy all the commands below and run them in the Package Manager Console.
 
 	Write-Host "Updating migrations...";
-	Add-Migration Update -Context SqliteDatabaseContext -OutputDir Migrations/Sqlite -Project Project -StartupProject Sqlite;
-	Add-Migration Update -Context SqlServerDatabaseContext -OutputDir Migrations/SqlServer -Project Project -StartupProject SqlServer;
+	Add-Migration Platina1 -Context SqliteDatabaseContext -OutputDir Migrations/Sqlite -Project Project -StartupProject Project;
+	Add-Migration Platina1 -Context SqlServerDatabaseContext -OutputDir Migrations/SqlServer -Project Project -StartupProject Project;
 	Write-Host "Finnished";
 
 ### 1.3 Scaffold-DbContext
