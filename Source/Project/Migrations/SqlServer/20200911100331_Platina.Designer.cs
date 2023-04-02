@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RegionOrebroLan.Platina.Data;
+using RegionOrebroLan.Platina.Data.SqlServer;
 
 namespace RegionOrebroLan.Platina.Data.Migrations.SqlServer
 {
-    [DbContext(typeof(SqlServerDatabaseContext))]
+    [DbContext(typeof(SqlServerPlatinaContext))]
     [Migration("20200911100331_Platina")]
-    partial class Create
+    partial class Platina
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -8,7 +8,7 @@ using RegionOrebroLan.Platina.Data.Entities;
 
 namespace RegionOrebroLan.Platina.Data
 {
-	public abstract class DatabaseContextBase : DbContext
+	public abstract class PlatinaContext : DbContext, IPlatinaContext
 	{
 		#region Fields
 
@@ -18,7 +18,7 @@ namespace RegionOrebroLan.Platina.Data
 
 		#region Constructors
 
-		protected DatabaseContextBase(IGuidFactory guidFactory, DbContextOptions options, ISystemClock systemClock) : base(options)
+		protected PlatinaContext(IGuidFactory guidFactory, DbContextOptions options, ISystemClock systemClock) : base(options)
 		{
 			this.GuidFactory = guidFactory ?? throw new ArgumentNullException(nameof(guidFactory));
 			this.SystemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
@@ -93,11 +93,11 @@ namespace RegionOrebroLan.Platina.Data
 		#endregion
 	}
 
-	public abstract class DatabaseContextBase<T> : DatabaseContextBase where T : DatabaseContextBase
+	public abstract class PlatinaContext<T> : PlatinaContext where T : PlatinaContext
 	{
 		#region Constructors
 
-		protected DatabaseContextBase(IGuidFactory guidFactory, DbContextOptions<T> options, ISystemClock systemClock) : base(guidFactory, options, systemClock) { }
+		protected PlatinaContext(IGuidFactory guidFactory, DbContextOptions<T> options, ISystemClock systemClock) : base(guidFactory, options, systemClock) { }
 
 		#endregion
 	}

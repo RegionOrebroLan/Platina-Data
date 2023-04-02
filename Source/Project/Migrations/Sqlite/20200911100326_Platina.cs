@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RegionOrebroLan.Platina.Data.Migrations.Sqlite
 {
-	public partial class Create : Migration
+	public partial class Platina : Migration
 	{
 		#region Methods
 
@@ -37,10 +37,7 @@ namespace RegionOrebroLan.Platina.Data.Migrations.Sqlite
 					Saved = table.Column<DateTime>(nullable: false),
 					Title = table.Column<string>(maxLength: 200, nullable: true)
 				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_Documents", x => x.Id);
-				});
+				constraints: table => { table.PrimaryKey("PK_Documents", x => x.Id); });
 
 			migrationBuilder.CreateIndex(
 				name: "IX_Documents_Guid",

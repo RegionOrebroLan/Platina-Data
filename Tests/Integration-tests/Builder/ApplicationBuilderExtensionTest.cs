@@ -1,6 +1,5 @@
-using System;
-using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using IntegrationTests.Helpers;
 using Microsoft.AspNetCore.Builder.Internal;
 using Microsoft.EntityFrameworkCore;
@@ -18,57 +17,91 @@ namespace IntegrationTests.Builder
 	{
 		#region Methods
 
-		[TestMethod]
-		public void Sqlite_Test()
+		[ClassInitialize]
+		public static async Task InitializeAsync(TestContext _)
+		{
+			await DatabaseHelper.DeleteDatabasesAsync();
+		}
+
+		protected internal virtual async Task UsePlatinaContext_Sqlite_Test(ServiceLifetime serviceLifetime)
 		{
 			var services = new ServiceCollection();
-			services.AddSqliteDatabaseContext(builder => builder.UseSqlite(Global.Configuration.GetConnectionString("SQLite")));
+			services.AddSqlitePlatinaContext(builder => builder.UseSqlite(Global.Configuration.GetConnectionString("Sqlite")), serviceLifetime, serviceLifetime);
 
-			var applicationBuilder = new ApplicationBuilder(services.BuildServiceProvider());
-			applicationBuilder.UseSqliteDatabaseContext();
-
-			// ReSharper disable ConvertToUsingDeclaration
-			using(var scope = applicationBuilder.ApplicationServices.CreateScope())
+			using(var serviceProvider = services.BuildServiceProvider())
 			{
-				var sqliteDatabaseContext = scope.ServiceProvider.GetRequiredService<SqliteDatabaseContext>();
+				var applicationBuilder = new ApplicationBuilder(serviceProvider);
+				applicationBuilder.UsePlatinaContext();
 
-				Assert.IsFalse(sqliteDatabaseContext.Documents.Any());
+				using(var scope = applicationBuilder.ApplicationServices.CreateScope())
+				{
+					var sqlitePlatinaContext = scope.ServiceProvider.GetRequiredService<PlatinaContext>();
 
-				sqliteDatabaseContext.Database.EnsureDeleted();
+					Assert.IsFalse(sqlitePlatinaContext.Documents.Any());
+
+					await sqlitePlatinaContext.Database.EnsureDeletedAsync();
+				}
 			}
-			// ReSharper restore ConvertToUsingDeclaration
 		}
 
 		[TestMethod]
-		public void SqlServer_Test()
+		public async Task UsePlatinaContext_SqliteAndScopedLifetime_Test()
 		{
-			var connectionString = Global.Configuration.GetConnectionString("SQLServer");
-			var dataDirectoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-			var originalDataDirectoryPath = AppDomain.CurrentDomain.GetData(Global.DataDirectoryName);
-			Directory.CreateDirectory(dataDirectoryPath);
-			AppDomain.CurrentDomain.SetData(Global.DataDirectoryName, dataDirectoryPath);
+			await this.UsePlatinaContext_Sqlite_Test(ServiceLifetime.Scoped);
+		}
 
-			connectionString = SqlServerHelper.ResolveConnectionString(connectionString, dataDirectoryPath);
+		[TestMethod]
+		public async Task UsePlatinaContext_SqliteAndSingletonLifetime_Test()
+		{
+			await this.UsePlatinaContext_Sqlite_Test(ServiceLifetime.Singleton);
+		}
+
+		[TestMethod]
+		public async Task UsePlatinaContext_SqliteAndTransientLifetime_Test()
+		{
+			await this.UsePlatinaContext_Sqlite_Test(ServiceLifetime.Transient);
+		}
+
+		protected internal virtual async Task UsePlatinaContext_SqlServer_Test(ServiceLifetime serviceLifetime)
+		{
+			var connectionString = Global.Configuration.GetConnectionString("SqlServer");
+			connectionString = await SqlServerConnectionStringResolver.ResolveAsync(connectionString);
 
 			var services = new ServiceCollection();
-			services.AddSqlServerDatabaseContext(builder => builder.UseSqlServer(connectionString));
+			services.AddSqlServerPlatinaContext(builder => builder.UseSqlServer(connectionString), serviceLifetime, serviceLifetime);
 
-			var applicationBuilder = new ApplicationBuilder(services.BuildServiceProvider());
-			applicationBuilder.UseSqlServerDatabaseContext();
-
-			// ReSharper disable ConvertToUsingDeclaration
-			using(var scope = applicationBuilder.ApplicationServices.CreateScope())
+			using(var serviceProvider = services.BuildServiceProvider())
 			{
-				var sqlServerDatabaseContext = scope.ServiceProvider.GetRequiredService<SqlServerDatabaseContext>();
+				var applicationBuilder = new ApplicationBuilder(serviceProvider);
+				applicationBuilder.UsePlatinaContext();
 
-				Assert.IsFalse(sqlServerDatabaseContext.Documents.Any());
+				using(var scope = applicationBuilder.ApplicationServices.CreateScope())
+				{
+					var sqlServerPlatinaContext = scope.ServiceProvider.GetRequiredService<PlatinaContext>();
 
-				sqlServerDatabaseContext.Database.EnsureDeleted();
+					Assert.IsFalse(sqlServerPlatinaContext.Documents.Any());
+
+					await sqlServerPlatinaContext.Database.EnsureDeletedAsync();
+				}
 			}
-			// ReSharper restore ConvertToUsingDeclaration
+		}
 
-			AppDomain.CurrentDomain.SetData(Global.DataDirectoryName, originalDataDirectoryPath);
-			Directory.Delete(dataDirectoryPath, true);
+		[TestMethod]
+		public async Task UsePlatinaContext_SqlServerAndScopedLifetime_Test()
+		{
+			await this.UsePlatinaContext_SqlServer_Test(ServiceLifetime.Scoped);
+		}
+
+		[TestMethod]
+		public async Task UsePlatinaContext_SqlServerAndSingletonLifetime_Test()
+		{
+			await this.UsePlatinaContext_SqlServer_Test(ServiceLifetime.Singleton);
+		}
+
+		[TestMethod]
+		public async Task UsePlatinaContext_SqlServerAndTransientLifetime_Test()
+		{
+			await this.UsePlatinaContext_SqlServer_Test(ServiceLifetime.Transient);
 		}
 
 		#endregion

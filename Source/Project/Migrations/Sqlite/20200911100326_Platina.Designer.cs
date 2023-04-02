@@ -3,15 +3,14 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RegionOrebroLan.Platina.Data;
+using RegionOrebroLan.Platina.Data.Sqlite;
 
 namespace RegionOrebroLan.Platina.Data.Migrations.Sqlite
 {
-    [DbContext(typeof(SqliteDatabaseContext))]
+    [DbContext(typeof(SqlitePlatinaContext))]
     [Migration("20200911100326_Platina")]
-    partial class Create
-    {
+    partial class Platina
+	{
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

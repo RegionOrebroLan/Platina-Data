@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RegionOrebroLan.Platina.Data;
@@ -9,18 +9,18 @@ namespace Application.Pages
 	{
 		#region Constructors
 
-		public IndexModel(DatabaseContextBase databaseContext)
+		public IndexModel(IPlatinaContext platinaContext)
 		{
-			this.DatabaseContext = databaseContext ?? throw new ArgumentNullException(nameof(databaseContext));
+			this.PlatinaContext = platinaContext ?? throw new ArgumentNullException(nameof(platinaContext));
 		}
 
 		#endregion
 
 		#region Properties
 
-		protected internal virtual DatabaseContextBase DatabaseContext { get; }
 		public virtual Exception Exception { get; set; }
 		public virtual string Message { get; set; }
+		protected internal virtual IPlatinaContext PlatinaContext { get; }
 
 		#endregion
 
@@ -30,7 +30,7 @@ namespace Application.Pages
 		{
 			try
 			{
-				var numberOfDocuments = this.DatabaseContext.Documents.Count();
+				var numberOfDocuments = this.PlatinaContext.Documents.Count();
 
 				this.Message = $"There are {numberOfDocuments} documents in the database.";
 			}

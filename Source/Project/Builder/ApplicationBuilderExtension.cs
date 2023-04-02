@@ -9,34 +9,17 @@ namespace RegionOrebroLan.Platina.Data.Builder
 	{
 		#region Methods
 
-		public static IApplicationBuilder UseDatabaseContext(this IApplicationBuilder applicationBuilder)
-		{
-			return applicationBuilder.UseDatabaseContextInternal<DatabaseContext>();
-		}
-
-		private static IApplicationBuilder UseDatabaseContextInternal<T>(this IApplicationBuilder applicationBuilder) where T : DatabaseContextBase
+		public static IApplicationBuilder UsePlatinaContext(this IApplicationBuilder applicationBuilder)
 		{
 			if(applicationBuilder == null)
 				throw new ArgumentNullException(nameof(applicationBuilder));
 
-			// ReSharper disable ConvertToUsingDeclaration
 			using(var scope = applicationBuilder.ApplicationServices.CreateScope())
 			{
-				scope.ServiceProvider.GetRequiredService<T>().Database.Migrate();
+				scope.ServiceProvider.GetRequiredService<PlatinaContext>().Database.Migrate();
 			}
-			// ReSharper restore ConvertToUsingDeclaration
 
 			return applicationBuilder;
-		}
-
-		public static IApplicationBuilder UseSqliteDatabaseContext(this IApplicationBuilder applicationBuilder)
-		{
-			return applicationBuilder.UseDatabaseContextInternal<SqliteDatabaseContext>();
-		}
-
-		public static IApplicationBuilder UseSqlServerDatabaseContext(this IApplicationBuilder applicationBuilder)
-		{
-			return applicationBuilder.UseDatabaseContextInternal<SqlServerDatabaseContext>();
 		}
 
 		#endregion
