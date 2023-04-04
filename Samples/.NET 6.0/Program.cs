@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using RegionOrebroLan.Platina.Data.Builder;
+using RegionOrebroLan.Platina.Data.Builder.Extensions;
 using RegionOrebroLan.Platina.Data.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
