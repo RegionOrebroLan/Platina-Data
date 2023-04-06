@@ -83,7 +83,7 @@ namespace RegionOrebroLan.Platina.Data
 			return base.SaveChanges(acceptAllChangesOnSuccess);
 		}
 
-		public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new())
+		public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
 		{
 			this.PrepareSaveChanges();
 
