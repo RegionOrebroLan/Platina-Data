@@ -4,7 +4,11 @@
 		<CheckEolTargetFramework>false</CheckEolTargetFramework>
 		<DelaySign>false</DelaySign>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<!-- Below is a workaround for https://github.com/dotnet/roslyn/issues/41640 -->
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<LangVersion>latest</LangVersion>
+		<!-- Below is for the same workaround as above. -->
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
 		<SignAssembly>true</SignAssembly>
 		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
