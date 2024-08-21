@@ -400,11 +400,14 @@ FodyWeavers.xsd
 # Custom
 StrongName.snk
 
-Samples/.NET 6.0/Data/*
-!Samples/.NET 6.0/Data/ReadMe.md
+.samples/.NET 6.0/Data/*
+!.samples/.NET 6.0/Data/ReadMe.md
 
-Samples/.NET Core 3.1/Data/*
-!Samples/.NET Core 3.1/Data/ReadMe.md
+.samples/.NET 8.0/Data/*
+!.samples/.NET 8.0/Data/ReadMe.md
+
+.samples/.NET Core 3.1/Data/*
+!.samples/.NET Core 3.1/Data/ReadMe.md
 
 Tests/Integration-tests/Data/*
 !Tests/Integration-tests/Data/ReadMe.md
