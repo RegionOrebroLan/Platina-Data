@@ -22,6 +22,7 @@ indent_style = space
 # Set all, https://docs.microsoft.com/en-us/visualstudio/code-quality/use-roslyn-analyzers?view=vs-2019#set-rule-severity-of-multiple-analyzer-rules-at-once-in-an-editorconfig-file
 dotnet_analyzer_diagnostic.severity = error
 
+dotnet_diagnostic.CA1510.severity = none # Only supported from net8.0: CA1510 Use 'ArgumentNullException.ThrowIfNull' instead of explicitly throwing a new exception instance (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1510)
 dotnet_diagnostic.IDE0003.severity = none
 dotnet_diagnostic.IDE0008.severity = none
 dotnet_diagnostic.IDE0011.severity = none

@@ -12,7 +12,7 @@
 		<PackageReleaseNotes>https://github.com/RegionOrebroLan/Platina-Data/releases/</PackageReleaseNotes>
 		<PackageTags></PackageTags>
 		<RootNamespace>$(AssemblyName)</RootNamespace>
-		<TargetFrameworks>net5.0;net6.0;net7.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net5.0;net6.0;net7.0;net8.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
 		<VersionPrefix>0.2.0</VersionPrefix>
 		<VersionSuffix>alpha</VersionSuffix>
 	</PropertyGroup>
