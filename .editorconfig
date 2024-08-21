@@ -29,3 +29,6 @@ dotnet_diagnostic.IDE0046.severity = none
 dotnet_diagnostic.IDE0055.severity = none
 dotnet_diagnostic.IDE0058.severity = none
 dotnet_diagnostic.IDE0063.severity = none
+
+# Visual Studio
+csharp_space_after_keywords_in_control_flow_statements = false # Avoid space after if in if-statement. Eg. if() and not if () (At the moment not working in *.cshtml files: https://github.com/dotnet/roslyn/issues/46364)
