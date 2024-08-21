@@ -8,20 +8,11 @@ using RegionOrebroLan.Platina.Data.DependencyInjection.Extensions;
 
 namespace Application
 {
-	public class Startup
+	public class Startup(IConfiguration configuration)
 	{
-		#region Constructors
-
-		public Startup(IConfiguration configuration)
-		{
-			this.Configuration = configuration;
-		}
-
-		#endregion
-
 		#region Properties
 
-		public IConfiguration Configuration { get; }
+		public IConfiguration Configuration { get; } = configuration;
 
 		#endregion
 

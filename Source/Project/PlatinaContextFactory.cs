@@ -6,20 +6,11 @@ namespace RegionOrebroLan.Platina.Data
 	/// <summary>
 	/// Needs a transient lifetime for the platina-context.
 	/// </summary>
-	public class PlatinaContextFactory : IPlatinaContextFactory
+	public class PlatinaContextFactory(IServiceProvider serviceProvider) : IPlatinaContextFactory
 	{
-		#region Constructors
-
-		public PlatinaContextFactory(IServiceProvider serviceProvider)
-		{
-			this.ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-		}
-
-		#endregion
-
 		#region Properties
 
-		protected internal virtual IServiceProvider ServiceProvider { get; }
+		protected internal virtual IServiceProvider ServiceProvider { get; } = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
 		#endregion
 

@@ -8,7 +8,7 @@ using RegionOrebroLan.Platina.Data.Entities;
 
 namespace RegionOrebroLan.Platina.Data
 {
-	public abstract class PlatinaContext : DbContext, IPlatinaContext
+	public abstract class PlatinaContext(IGuidFactory guidFactory, DbContextOptions options, ISystemClock systemClock) : DbContext(options), IPlatinaContext
 	{
 		#region Fields
 
@@ -16,21 +16,11 @@ namespace RegionOrebroLan.Platina.Data
 
 		#endregion
 
-		#region Constructors
-
-		protected PlatinaContext(IGuidFactory guidFactory, DbContextOptions options, ISystemClock systemClock) : base(options)
-		{
-			this.GuidFactory = guidFactory ?? throw new ArgumentNullException(nameof(guidFactory));
-			this.SystemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
-		}
-
-		#endregion
-
 		#region Properties
 
 		public virtual DbSet<Document> Documents { get; set; }
-		protected internal virtual IGuidFactory GuidFactory { get; }
-		protected internal virtual ISystemClock SystemClock { get; }
+		protected internal virtual IGuidFactory GuidFactory { get; } = guidFactory ?? throw new ArgumentNullException(nameof(guidFactory));
+		protected internal virtual ISystemClock SystemClock { get; } = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
 
 		#endregion
 
@@ -93,12 +83,5 @@ namespace RegionOrebroLan.Platina.Data
 		#endregion
 	}
 
-	public abstract class PlatinaContext<T> : PlatinaContext where T : PlatinaContext
-	{
-		#region Constructors
-
-		protected PlatinaContext(IGuidFactory guidFactory, DbContextOptions<T> options, ISystemClock systemClock) : base(guidFactory, options, systemClock) { }
-
-		#endregion
-	}
+	public abstract class PlatinaContext<T>(IGuidFactory guidFactory, DbContextOptions<T> options, ISystemClock systemClock) : PlatinaContext(guidFactory, options, systemClock) where T : PlatinaContext { }
 }

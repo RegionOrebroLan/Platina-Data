@@ -3,22 +3,13 @@ using RegionOrebroLan.Platina.Data;
 
 namespace Application.Pages
 {
-	public class IndexModel : PageModel
+	public class IndexModel(IPlatinaContextFactory platinaContextFactory) : PageModel
 	{
-		#region Constructors
-
-		public IndexModel(IPlatinaContextFactory platinaContextFactory)
-		{
-			this.PlatinaContextFactory = platinaContextFactory ?? throw new ArgumentNullException(nameof(platinaContextFactory));
-		}
-
-		#endregion
-
 		#region Properties
 
 		public virtual Exception Exception { get; set; }
 		public virtual string Message { get; set; }
-		protected internal virtual IPlatinaContextFactory PlatinaContextFactory { get; }
+		protected internal virtual IPlatinaContextFactory PlatinaContextFactory { get; } = platinaContextFactory ?? throw new ArgumentNullException(nameof(platinaContextFactory));
 
 		#endregion
 
