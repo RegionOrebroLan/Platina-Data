@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RegionOrebroLan.Platina.Data;
-using RegionOrebroLan.Platina.Data.Builder.Extensions;
 using RegionOrebroLan.Platina.Data.DependencyInjection.Extensions;
 
 namespace IntegrationTests
@@ -78,7 +77,11 @@ namespace IntegrationTests
 			using(var serviceProvider = services.BuildServiceProvider())
 			{
 				var applicationBuilder = new ApplicationBuilder(serviceProvider);
-				applicationBuilder.UsePlatinaContext();
+
+				using(var scope = applicationBuilder.ApplicationServices.CreateScope())
+				{
+					await scope.ServiceProvider.GetRequiredService<PlatinaContext>().Database.MigrateAsync();
+				}
 
 				try
 				{
