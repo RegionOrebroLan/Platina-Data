@@ -1,4 +1,7 @@
 <Project>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0'">
+		<PackageReferenceVersion>9.0.0</PackageReferenceVersion>
+	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<PackageReferenceVersion>8.0.11</PackageReferenceVersion>
 	</PropertyGroup>
