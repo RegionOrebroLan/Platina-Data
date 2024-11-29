@@ -6,7 +6,8 @@
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<!-- Below is a workaround for https://github.com/dotnet/roslyn/issues/41640 -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<LangVersion>latest</LangVersion>
+		<!-- LangVersion: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version -->
+		<LangVersion>default</LangVersion>
 		<!-- Below is for the same workaround as above. -->
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
 		<SignAssembly>true</SignAssembly>
