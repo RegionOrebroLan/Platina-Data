@@ -1,0 +1,31 @@
+<Solution>
+	<Folder Name="/.root/">
+		<File Path=".editorconfig" />
+		<File Path=".gitignore" />
+		<File Path="Directory.Build.props" />
+		<File Path="Directory.Build.targets" />
+		<File Path="Directory.Version.props" />
+		<File Path="License" />
+		<File Path="NuGet.config" />
+		<File Path="ReadMe.md" />
+		<File Path="StrongName.Development.snk" />
+	</Folder>
+	<Folder Name="/.samples/">
+		<File Path=".samples/.editorconfig" />
+		<File Path=".samples/Directory.Build.props" />
+		<File Path=".samples/Directory.Build.targets" />
+		<Project Path=".samples/.NET 6.0/.NET 6.0.csproj" />
+		<Project Path=".samples/.NET 8.0/.NET 8.0.csproj" />
+		<Project Path=".samples/.NET Core 3.1/.NET Core 3.1.csproj" />
+	</Folder>
+	<Folder Name="/Source/">
+		<Project DefaultStartup="true" Path="Source/Project/Project.csproj" />
+	</Folder>
+	<Folder Name="/Tests/">
+		<File Path="Tests/.editorconfig" />
+		<File Path="Tests/Directory.Build.props" />
+		<File Path="Tests/Directory.Build.targets" />
+		<Project Path="Tests/Integration-tests/Integration-tests.csproj" />
+		<Project Path="Tests/Unit-tests/Unit-tests.csproj" />
+	</Folder>
+</Solution>
