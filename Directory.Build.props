@@ -10,6 +10,8 @@
 		<LangVersion>default</LangVersion>
 		<!-- Below is for the same workaround as above. -->
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
+		<!-- Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q -->
+		<NoWarn>$(NoWarn);NU1903</NoWarn>
 		<SignAssembly>true</SignAssembly>
 		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
