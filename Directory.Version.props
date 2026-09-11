@@ -1,12 +1,12 @@
 <Project>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
-		<PackageReferenceVersion>10.0.10</PackageReferenceVersion>
+		<PackageReferenceVersion>10.0.12</PackageReferenceVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0'">
-		<PackageReferenceVersion>9.0.18</PackageReferenceVersion>
+		<PackageReferenceVersion>9.0.20</PackageReferenceVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
-		<PackageReferenceVersion>8.0.29</PackageReferenceVersion>
+		<PackageReferenceVersion>8.0.31</PackageReferenceVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net7.0'">
 		<PackageReferenceVersion>7.0.20</PackageReferenceVersion>
@@ -18,7 +18,7 @@
 		<PackageReferenceVersion>3.1.32</PackageReferenceVersion>
 	</PropertyGroup>
 	<PropertyGroup>
-		<SqlClientVersion>7.0.2</SqlClientVersion>
+		<SqlClientVersion>7.0.3</SqlClientVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' Or '$(TargetFramework)' == 'net5.0' Or '$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net7.0'">
 		<SqlClientVersion>5.2.3</SqlClientVersion>

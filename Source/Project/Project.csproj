@@ -26,8 +26,8 @@
 	</ItemGroup>
 	<!-- Specific upgrades due to "nested" vulnerabilities -->
 	<ItemGroup>
-		<PackageReference Include="System.Formats.Asn1" Version="10.0.10" />
-		<PackageReference Include="System.Text.Json" Version="10.0.10" />
+		<PackageReference Include="System.Formats.Asn1" Version="10.0.12" />
+		<PackageReference Include="System.Text.Json" Version="10.0.12" />
 	</ItemGroup>
 	<Target Name="HandleAssemblyOriginatorKeyFile" BeforeTargets="BeforeBuild" Condition="$(SignAssembly) AND !Exists('$(AssemblyOriginatorKeyFile)')">
 		<PropertyGroup>
