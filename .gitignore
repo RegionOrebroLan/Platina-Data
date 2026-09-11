@@ -406,6 +406,9 @@ StrongName.snk
 .samples/.NET 8.0/Data/*
 !.samples/.NET 8.0/Data/ReadMe.md
 
+.samples/.NET 10.0/Data/*
+!.samples/.NET 10.0/Data/ReadMe.md
+
 .samples/.NET Core 3.1/Data/*
 !.samples/.NET Core 3.1/Data/ReadMe.md
 

@@ -14,6 +14,7 @@
 		<File Path=".samples/.editorconfig" />
 		<File Path=".samples/Directory.Build.props" />
 		<File Path=".samples/Directory.Build.targets" />
+		<Project Path=".samples/.NET 10.0/.NET 10.0.csproj" />
 		<Project Path=".samples/.NET 6.0/.NET 6.0.csproj" />
 		<Project Path=".samples/.NET 8.0/.NET 8.0.csproj" />
 		<Project Path=".samples/.NET Core 3.1/.NET Core 3.1.csproj" />
