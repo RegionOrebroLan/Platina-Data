@@ -3,54 +3,53 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 
-namespace IntegrationTests.Helpers
+namespace IntegrationTests.Helpers;
+
+public static class SqlServerConnectionStringResolver
 {
-	public static class SqlServerConnectionStringResolver
+	#region Fields
+
+	private const string _localDatabasePrefix = "(LocalDb)";
+
+	#endregion
+
+	#region Methods
+
+	private static async Task<bool> IsLocalDatabaseConnectionStringAsync(SqlConnectionStringBuilder sqlConnectionStringBuilder)
 	{
-		#region Fields
+		if(sqlConnectionStringBuilder == null)
+			throw new ArgumentNullException(nameof(sqlConnectionStringBuilder));
 
-		private const string _localDatabasePrefix = "(LocalDb)";
+		return await Task.FromResult(sqlConnectionStringBuilder.DataSource.StartsWith(_localDatabasePrefix, StringComparison.OrdinalIgnoreCase));
+	}
 
-		#endregion
-
-		#region Methods
-
-		private static async Task<bool> IsLocalDatabaseConnectionStringAsync(SqlConnectionStringBuilder sqlConnectionStringBuilder)
+	public static async Task<string> ResolveAsync(string connectionString)
+	{
+		// ReSharper disable InvertIf
+		if(!string.IsNullOrWhiteSpace(connectionString))
 		{
-			if(sqlConnectionStringBuilder == null)
-				throw new ArgumentNullException(nameof(sqlConnectionStringBuilder));
+			var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
 
-			return await Task.FromResult(sqlConnectionStringBuilder.DataSource.StartsWith(_localDatabasePrefix, StringComparison.OrdinalIgnoreCase));
-		}
-
-		public static async Task<string> ResolveAsync(string connectionString)
-		{
-			// ReSharper disable InvertIf
-			if(!string.IsNullOrWhiteSpace(connectionString))
+			if(await IsLocalDatabaseConnectionStringAsync(sqlConnectionStringBuilder))
 			{
-				var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
+				var attachDbFilename = sqlConnectionStringBuilder.AttachDBFilename;
 
-				if(await IsLocalDatabaseConnectionStringAsync(sqlConnectionStringBuilder))
+				if(!Path.IsPathRooted(attachDbFilename))
 				{
-					var attachDbFilename = sqlConnectionStringBuilder.AttachDBFilename;
+					attachDbFilename = Path.Combine(Global.HostEnvironment.ContentRootPath, attachDbFilename.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar));
+					sqlConnectionStringBuilder.AttachDBFilename = attachDbFilename;
 
-					if(!Path.IsPathRooted(attachDbFilename))
-					{
-						attachDbFilename = Path.Combine(Global.HostEnvironment.ContentRootPath, attachDbFilename.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar));
-						sqlConnectionStringBuilder.AttachDBFilename = attachDbFilename;
+					if(string.IsNullOrEmpty(sqlConnectionStringBuilder.InitialCatalog))
+						sqlConnectionStringBuilder.InitialCatalog = attachDbFilename;
 
-						if(string.IsNullOrEmpty(sqlConnectionStringBuilder.InitialCatalog))
-							sqlConnectionStringBuilder.InitialCatalog = attachDbFilename;
-
-						connectionString = sqlConnectionStringBuilder.ConnectionString;
-					}
+					connectionString = sqlConnectionStringBuilder.ConnectionString;
 				}
 			}
-			// ReSharper restore InvertIf
-
-			return connectionString;
 		}
+		// ReSharper restore InvertIf
 
-		#endregion
+		return connectionString;
 	}
+
+	#endregion
 }

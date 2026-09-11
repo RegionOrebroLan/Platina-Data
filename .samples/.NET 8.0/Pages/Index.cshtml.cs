@@ -1,37 +1,36 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RegionOrebroLan.Platina.Data;
 
-namespace Application.Pages
+namespace Application.Pages;
+
+public class IndexModel(IPlatinaContextFactory platinaContextFactory) : PageModel
 {
-	public class IndexModel(IPlatinaContextFactory platinaContextFactory) : PageModel
+	#region Properties
+
+	public virtual Exception Exception { get; set; }
+	public virtual string Message { get; set; }
+	protected internal virtual IPlatinaContextFactory PlatinaContextFactory { get; } = platinaContextFactory ?? throw new ArgumentNullException(nameof(platinaContextFactory));
+
+	#endregion
+
+	#region Methods
+
+	public void OnGet()
 	{
-		#region Properties
-
-		public virtual Exception Exception { get; set; }
-		public virtual string Message { get; set; }
-		protected internal virtual IPlatinaContextFactory PlatinaContextFactory { get; } = platinaContextFactory ?? throw new ArgumentNullException(nameof(platinaContextFactory));
-
-		#endregion
-
-		#region Methods
-
-		public void OnGet()
+		try
 		{
-			try
+			using(var platinaContext = this.PlatinaContextFactory.Create())
 			{
-				using(var platinaContext = this.PlatinaContextFactory.Create())
-				{
-					var numberOfDocuments = platinaContext.Documents.Count();
+				var numberOfDocuments = platinaContext.Documents.Count();
 
-					this.Message = $"There are {numberOfDocuments} documents in the database.";
-				}
-			}
-			catch(Exception exception)
-			{
-				this.Exception = exception;
+				this.Message = $"There are {numberOfDocuments} documents in the database.";
 			}
 		}
-
-		#endregion
+		catch(Exception exception)
+		{
+			this.Exception = exception;
+		}
 	}
+
+	#endregion
 }

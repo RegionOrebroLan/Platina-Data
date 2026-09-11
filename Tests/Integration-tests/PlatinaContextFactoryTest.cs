@@ -10,145 +10,144 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RegionOrebroLan.Platina.Data;
 using RegionOrebroLan.Platina.Data.DependencyInjection.Extensions;
 
-namespace IntegrationTests
+namespace IntegrationTests;
+
+[TestClass]
+public class OrganizationContextFactoryTest
 {
-	[TestClass]
-	public class OrganizationContextFactoryTest
+	#region Methods
+
+	[TestMethod]
+	public async Task Create_Once_SqlServerAndIfContextLifetimeIsScoped_ShouldWorkProperly()
 	{
-		#region Methods
+		await this.Create_SqlServer_Test(false, ServiceLifetime.Scoped);
+	}
 
-		[TestMethod]
-		public async Task Create_Once_SqlServerAndIfContextLifetimeIsScoped_ShouldWorkProperly()
+	[TestMethod]
+	public async Task Create_Once_SqlServerAndIfContextLifetimeIsSingleton_ShouldWorkProperly()
+	{
+		await this.Create_SqlServer_Test(false, ServiceLifetime.Singleton);
+	}
+
+	[TestMethod]
+	public async Task Create_Once_SqlServerAndIfContextLifetimeIsTransient_ShouldWorkProperly()
+	{
+		await this.Create_SqlServer_Test(false, ServiceLifetime.Transient);
+	}
+
+	[TestMethod]
+	public async Task Create_Once_SqliteAndIfContextLifetimeIsScoped_ShouldWorkProperly()
+	{
+		await this.Create_Sqlite_Test(false, ServiceLifetime.Scoped);
+	}
+
+	[TestMethod]
+	public async Task Create_Once_SqliteAndIfContextLifetimeIsSingleton_ShouldWorkProperly()
+	{
+		await this.Create_Sqlite_Test(false, ServiceLifetime.Singleton);
+	}
+
+	[TestMethod]
+	public async Task Create_Once_SqliteAndIfContextLifetimeIsTransient_ShouldWorkProperly()
+	{
+		await this.Create_Sqlite_Test(false, ServiceLifetime.Transient);
+	}
+
+	protected internal virtual async Task Create_SqlServer_Test(bool createTwice, ServiceLifetime serviceLifetime)
+	{
+		var connectionString = Global.Configuration.GetConnectionString("SqlServer");
+		connectionString = await SqlServerConnectionStringResolver.ResolveAsync(connectionString);
+
+		var services = new ServiceCollection();
+		services.AddSqlServerPlatinaContext(builder => builder.UseSqlServer(connectionString), serviceLifetime, serviceLifetime);
+
+		await this.Create_Test(createTwice, services);
+	}
+
+	protected internal virtual async Task Create_Sqlite_Test(bool createTwice, ServiceLifetime serviceLifetime)
+	{
+		var services = new ServiceCollection();
+		services.AddSqlitePlatinaContext(builder => builder.UseSqlite(Global.Configuration.GetConnectionString("Sqlite")), serviceLifetime, serviceLifetime);
+
+		await this.Create_Test(createTwice, services);
+	}
+
+	protected internal virtual async Task Create_Test(bool createTwice, IServiceCollection services)
+	{
+		using(var serviceProvider = services.BuildServiceProvider())
 		{
-			await this.Create_SqlServer_Test(false, ServiceLifetime.Scoped);
-		}
+			var applicationBuilder = new ApplicationBuilder(serviceProvider);
 
-		[TestMethod]
-		public async Task Create_Once_SqlServerAndIfContextLifetimeIsSingleton_ShouldWorkProperly()
-		{
-			await this.Create_SqlServer_Test(false, ServiceLifetime.Singleton);
-		}
-
-		[TestMethod]
-		public async Task Create_Once_SqlServerAndIfContextLifetimeIsTransient_ShouldWorkProperly()
-		{
-			await this.Create_SqlServer_Test(false, ServiceLifetime.Transient);
-		}
-
-		[TestMethod]
-		public async Task Create_Once_SqliteAndIfContextLifetimeIsScoped_ShouldWorkProperly()
-		{
-			await this.Create_Sqlite_Test(false, ServiceLifetime.Scoped);
-		}
-
-		[TestMethod]
-		public async Task Create_Once_SqliteAndIfContextLifetimeIsSingleton_ShouldWorkProperly()
-		{
-			await this.Create_Sqlite_Test(false, ServiceLifetime.Singleton);
-		}
-
-		[TestMethod]
-		public async Task Create_Once_SqliteAndIfContextLifetimeIsTransient_ShouldWorkProperly()
-		{
-			await this.Create_Sqlite_Test(false, ServiceLifetime.Transient);
-		}
-
-		protected internal virtual async Task Create_SqlServer_Test(bool createTwice, ServiceLifetime serviceLifetime)
-		{
-			var connectionString = Global.Configuration.GetConnectionString("SqlServer");
-			connectionString = await SqlServerConnectionStringResolver.ResolveAsync(connectionString);
-
-			var services = new ServiceCollection();
-			services.AddSqlServerPlatinaContext(builder => builder.UseSqlServer(connectionString), serviceLifetime, serviceLifetime);
-
-			await this.Create_Test(createTwice, services);
-		}
-
-		protected internal virtual async Task Create_Sqlite_Test(bool createTwice, ServiceLifetime serviceLifetime)
-		{
-			var services = new ServiceCollection();
-			services.AddSqlitePlatinaContext(builder => builder.UseSqlite(Global.Configuration.GetConnectionString("Sqlite")), serviceLifetime, serviceLifetime);
-
-			await this.Create_Test(createTwice, services);
-		}
-
-		protected internal virtual async Task Create_Test(bool createTwice, IServiceCollection services)
-		{
-			using(var serviceProvider = services.BuildServiceProvider())
+			using(var scope = applicationBuilder.ApplicationServices.CreateScope())
 			{
-				var applicationBuilder = new ApplicationBuilder(serviceProvider);
+				await scope.ServiceProvider.GetRequiredService<PlatinaContext>().Database.MigrateAsync();
+			}
 
-				using(var scope = applicationBuilder.ApplicationServices.CreateScope())
+			try
+			{
+				var platinaContextFactory = serviceProvider.GetRequiredService<IPlatinaContextFactory>();
+
+				using(var platinaContext = platinaContextFactory.Create())
 				{
-					await scope.ServiceProvider.GetRequiredService<PlatinaContext>().Database.MigrateAsync();
+					_ = platinaContext.Documents.Count();
 				}
 
-				try
+				if(createTwice)
 				{
-					var platinaContextFactory = serviceProvider.GetRequiredService<IPlatinaContextFactory>();
-
 					using(var platinaContext = platinaContextFactory.Create())
 					{
 						_ = platinaContext.Documents.Count();
 					}
-
-					if(createTwice)
-					{
-						using(var platinaContext = platinaContextFactory.Create())
-						{
-							_ = platinaContext.Documents.Count();
-						}
-					}
-				}
-				finally
-				{
-					await DatabaseHelper.DeleteDatabasesAsync();
 				}
 			}
+			finally
+			{
+				await DatabaseHelper.DeleteDatabasesAsync();
+			}
 		}
-
-		[TestMethod]
-		public async Task Create_Twice_SqlServerAndIfContextLifetimeIsScoped_ShouldThrowAnObjectDisposedException()
-		{
-			await Assert.ThrowsExactlyAsync<ObjectDisposedException>(async () => { await this.Create_SqlServer_Test(true, ServiceLifetime.Scoped); });
-		}
-
-		[TestMethod]
-		public async Task Create_Twice_SqlServerAndIfContextLifetimeIsSingleton_ShouldThrowAnObjectDisposedException()
-		{
-			await Assert.ThrowsExactlyAsync<ObjectDisposedException>(async () => { await this.Create_SqlServer_Test(true, ServiceLifetime.Singleton); });
-		}
-
-		[TestMethod]
-		public async Task Create_Twice_SqlServerAndIfContextLifetimeIsTransient_ShouldWorkProperly()
-		{
-			await this.Create_SqlServer_Test(true, ServiceLifetime.Transient);
-		}
-
-		[TestMethod]
-		public async Task Create_Twice_SqliteAndIfContextLifetimeIsScoped_ShouldThrowAnObjectDisposedException()
-		{
-			await Assert.ThrowsExactlyAsync<ObjectDisposedException>(async () => { await this.Create_Sqlite_Test(true, ServiceLifetime.Scoped); });
-		}
-
-		[TestMethod]
-		public async Task Create_Twice_SqliteAndIfContextLifetimeIsSingleton_ShouldThrowAnObjectDisposedException()
-		{
-			await Assert.ThrowsExactlyAsync<ObjectDisposedException>(async () => { await this.Create_Sqlite_Test(true, ServiceLifetime.Singleton); });
-		}
-
-		[TestMethod]
-		public async Task Create_Twice_SqliteAndIfContextLifetimeIsTransient_ShouldWorkProperly()
-		{
-			await this.Create_Sqlite_Test(true, ServiceLifetime.Transient);
-		}
-
-		[ClassInitialize]
-		public static async Task InitializeAsync(TestContext _)
-		{
-			await DatabaseHelper.DeleteDatabasesAsync();
-		}
-
-		#endregion
 	}
+
+	[TestMethod]
+	public async Task Create_Twice_SqlServerAndIfContextLifetimeIsScoped_ShouldThrowAnObjectDisposedException()
+	{
+		await Assert.ThrowsExactlyAsync<ObjectDisposedException>(async () => { await this.Create_SqlServer_Test(true, ServiceLifetime.Scoped); });
+	}
+
+	[TestMethod]
+	public async Task Create_Twice_SqlServerAndIfContextLifetimeIsSingleton_ShouldThrowAnObjectDisposedException()
+	{
+		await Assert.ThrowsExactlyAsync<ObjectDisposedException>(async () => { await this.Create_SqlServer_Test(true, ServiceLifetime.Singleton); });
+	}
+
+	[TestMethod]
+	public async Task Create_Twice_SqlServerAndIfContextLifetimeIsTransient_ShouldWorkProperly()
+	{
+		await this.Create_SqlServer_Test(true, ServiceLifetime.Transient);
+	}
+
+	[TestMethod]
+	public async Task Create_Twice_SqliteAndIfContextLifetimeIsScoped_ShouldThrowAnObjectDisposedException()
+	{
+		await Assert.ThrowsExactlyAsync<ObjectDisposedException>(async () => { await this.Create_Sqlite_Test(true, ServiceLifetime.Scoped); });
+	}
+
+	[TestMethod]
+	public async Task Create_Twice_SqliteAndIfContextLifetimeIsSingleton_ShouldThrowAnObjectDisposedException()
+	{
+		await Assert.ThrowsExactlyAsync<ObjectDisposedException>(async () => { await this.Create_Sqlite_Test(true, ServiceLifetime.Singleton); });
+	}
+
+	[TestMethod]
+	public async Task Create_Twice_SqliteAndIfContextLifetimeIsTransient_ShouldWorkProperly()
+	{
+		await this.Create_Sqlite_Test(true, ServiceLifetime.Transient);
+	}
+
+	[ClassInitialize]
+	public static async Task InitializeAsync(TestContext _)
+	{
+		await DatabaseHelper.DeleteDatabasesAsync();
+	}
+
+	#endregion
 }

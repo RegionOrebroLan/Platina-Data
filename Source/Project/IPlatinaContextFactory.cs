@@ -1,14 +1,13 @@
-namespace RegionOrebroLan.Platina.Data
+namespace RegionOrebroLan.Platina.Data;
+
+/// <summary>
+/// Needs a transient lifetime for the platina-context.
+/// </summary>
+public interface IPlatinaContextFactory
 {
-	/// <summary>
-	/// Needs a transient lifetime for the platina-context.
-	/// </summary>
-	public interface IPlatinaContextFactory
-	{
-		#region Methods
+	#region Methods
 
-		IPlatinaContext Create();
+	IPlatinaContext Create();
 
-		#endregion
-	}
+	#endregion
 }

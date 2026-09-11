@@ -6,43 +6,42 @@ using Microsoft.Extensions.DependencyInjection;
 using RegionOrebroLan.Platina.Data;
 using RegionOrebroLan.Platina.Data.DependencyInjection.Extensions;
 
-namespace Application
+namespace Application;
+
+public class Startup(IConfiguration configuration)
 {
-	public class Startup(IConfiguration configuration)
+	#region Properties
+
+	public IConfiguration Configuration { get; } = configuration;
+
+	#endregion
+
+	#region Methods
+
+	public virtual void Configure(IApplicationBuilder app)
 	{
-		#region Properties
+		if(app == null)
+			throw new ArgumentNullException(nameof(app));
 
-		public IConfiguration Configuration { get; } = configuration;
+		app.UseDeveloperExceptionPage();
 
-		#endregion
-
-		#region Methods
-
-		public virtual void Configure(IApplicationBuilder app)
+		using(var scope = app.ApplicationServices.CreateScope())
 		{
-			if(app == null)
-				throw new ArgumentNullException(nameof(app));
-
-			app.UseDeveloperExceptionPage();
-
-			using(var scope = app.ApplicationServices.CreateScope())
-			{
-				scope.ServiceProvider.GetRequiredService<PlatinaContext>().Database.Migrate();
-			}
-
-			app.UseRouting();
-			app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
+			scope.ServiceProvider.GetRequiredService<PlatinaContext>().Database.Migrate();
 		}
 
-		public virtual void ConfigureServices(IServiceCollection services)
-		{
-			if(services == null)
-				throw new ArgumentNullException(nameof(services));
-
-			services.AddRazorPages();
-			services.AddSqlitePlatinaContext(options => options.UseSqlite(this.Configuration.GetConnectionString("Platina")));
-		}
-
-		#endregion
+		app.UseRouting();
+		app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
 	}
+
+	public virtual void ConfigureServices(IServiceCollection services)
+	{
+		if(services == null)
+			throw new ArgumentNullException(nameof(services));
+
+		services.AddRazorPages();
+		services.AddSqlitePlatinaContext(options => options.UseSqlite(this.Configuration.GetConnectionString("Platina")));
+	}
+
+	#endregion
 }

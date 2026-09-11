@@ -1,16 +1,15 @@
 using System;
 
-namespace RegionOrebroLan.Platina.Data
+namespace RegionOrebroLan.Platina.Data;
+
+public class GuidFactory : IGuidFactory
 {
-	public class GuidFactory : IGuidFactory
+	#region Methods
+
+	public virtual Guid Create()
 	{
-		#region Methods
-
-		public virtual Guid Create()
-		{
-			return Guid.NewGuid();
-		}
-
-		#endregion
+		return Guid.NewGuid();
 	}
+
+	#endregion
 }

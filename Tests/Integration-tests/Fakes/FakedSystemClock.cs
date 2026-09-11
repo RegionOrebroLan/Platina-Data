@@ -1,14 +1,13 @@
 using System;
 using Microsoft.Extensions.Internal;
 
-namespace IntegrationTests.Fakes
+namespace IntegrationTests.Fakes;
+
+public class FakedSystemClock : ISystemClock
 {
-	public class FakedSystemClock : ISystemClock
-	{
-		#region Properties
+	#region Properties
 
-		public virtual DateTimeOffset UtcNow { get; set; }
+	public virtual DateTimeOffset UtcNow { get; set; }
 
-		#endregion
-	}
+	#endregion
 }

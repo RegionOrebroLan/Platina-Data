@@ -1,8 +1,7 @@
-namespace IntegrationTests.Helpers
+namespace IntegrationTests.Helpers;
+
+public enum DatabaseProvider
 {
-	public enum DatabaseProvider
-	{
-		Sqlite,
-		SqlServer
-	}
+	Sqlite,
+	SqlServer
 }

@@ -2,23 +2,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Internal;
 
-namespace RegionOrebroLan.Platina.Data.Sqlite
+namespace RegionOrebroLan.Platina.Data.Sqlite;
+
+/// <summary>
+/// Class used when creating migrations.
+/// </summary>
+public class SqlitePlatinaContextDesignTimeFactory : IDesignTimeDbContextFactory<SqlitePlatinaContext>
 {
-	/// <summary>
-	/// Class used when creating migrations.
-	/// </summary>
-	public class SqlitePlatinaContextDesignTimeFactory : IDesignTimeDbContextFactory<SqlitePlatinaContext>
+	#region Methods
+
+	public SqlitePlatinaContext CreateDbContext(string[] args)
 	{
-		#region Methods
+		var optionsBuilder = new DbContextOptionsBuilder<SqlitePlatinaContext>();
+		optionsBuilder.UseSqlite("A value that can not be empty just to be able to create/update migrations.");
 
-		public SqlitePlatinaContext CreateDbContext(string[] args)
-		{
-			var optionsBuilder = new DbContextOptionsBuilder<SqlitePlatinaContext>();
-			optionsBuilder.UseSqlite("A value that can not be empty just to be able to create/update migrations.");
-
-			return new SqlitePlatinaContext(new GuidFactory(), optionsBuilder.Options, new SystemClock());
-		}
-
-		#endregion
+		return new SqlitePlatinaContext(new GuidFactory(), optionsBuilder.Options, new SystemClock());
 	}
+
+	#endregion
 }

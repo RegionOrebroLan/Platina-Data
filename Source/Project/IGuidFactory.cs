@@ -1,13 +1,12 @@
 using System;
 
-namespace RegionOrebroLan.Platina.Data
+namespace RegionOrebroLan.Platina.Data;
+
+public interface IGuidFactory
 {
-	public interface IGuidFactory
-	{
-		#region Methods
+	#region Methods
 
-		Guid Create();
+	Guid Create();
 
-		#endregion
-	}
+	#endregion
 }

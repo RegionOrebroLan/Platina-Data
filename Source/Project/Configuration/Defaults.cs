@@ -1,11 +1,10 @@
-namespace RegionOrebroLan.Platina.Data.Configuration
+namespace RegionOrebroLan.Platina.Data.Configuration;
+
+public static class Defaults
 {
-	public static class Defaults
-	{
-		#region Fields
+	#region Fields
 
-		public const char ValueSeparator = '\a';
+	public const char ValueSeparator = '\a';
 
-		#endregion
-	}
+	#endregion
 }
