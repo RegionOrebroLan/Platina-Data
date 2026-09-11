@@ -21,9 +21,9 @@ public static class Global
 {
 	#region Fields
 
+	public static readonly string ProjectDirectoryPath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
 	private static IConfiguration _configuration;
 	private static IHostEnvironment _hostEnvironment;
-	public static readonly string ProjectDirectoryPath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
 
 	#endregion
 

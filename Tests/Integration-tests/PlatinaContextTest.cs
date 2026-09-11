@@ -74,90 +74,6 @@ public class PlatinaContextTest
 		await DatabaseHelper.DeleteDatabasesAsync();
 	}
 
-	[TestMethod]
-	public async Task SaveChanges_Sqlite_ShouldResolveCreatedAndGuidAndSaved()
-	{
-		await Task.CompletedTask;
-
-		this.SaveChangesShouldResolveCreatedAndGuidAndSaved(DatabaseProvider.Sqlite);
-	}
-
-	[TestMethod]
-	public async Task SaveChanges_Sqlite_WithAutoDetectChangesShouldWorkProperly()
-	{
-		await Task.CompletedTask;
-
-		this.SaveChangesWithAutoDetectChangesShouldWorkProperly(DatabaseProvider.Sqlite);
-	}
-
-	[TestMethod]
-	public async Task SaveChanges_Sqlite_WithoutAutoDetectChangesShouldWorkProperly()
-	{
-		await Task.CompletedTask;
-
-		this.SaveChangesWithoutAutoDetectChangesShouldWorkProperly(DatabaseProvider.Sqlite);
-	}
-
-	[TestMethod]
-	public async Task SaveChanges_SqlServer_ShouldResolveCreatedAndGuidAndSaved()
-	{
-		await Task.CompletedTask;
-
-		this.SaveChangesShouldResolveCreatedAndGuidAndSaved(DatabaseProvider.SqlServer);
-	}
-
-	[TestMethod]
-	public async Task SaveChanges_SqlServer_WithAutoDetectChangesShouldWorkProperly()
-	{
-		await Task.CompletedTask;
-
-		this.SaveChangesWithAutoDetectChangesShouldWorkProperly(DatabaseProvider.SqlServer);
-	}
-
-	[TestMethod]
-	public async Task SaveChanges_SqlServer_WithoutAutoDetectChangesShouldWorkProperly()
-	{
-		await Task.CompletedTask;
-
-		this.SaveChangesWithoutAutoDetectChangesShouldWorkProperly(DatabaseProvider.SqlServer);
-	}
-
-	[TestMethod]
-	public async Task SaveChangesAsync_Sqlite_ShouldResolveCreatedAndGuidAndSaved()
-	{
-		await this.SaveChangesAsyncShouldResolveCreatedAndGuidAndSaved(DatabaseProvider.Sqlite);
-	}
-
-	[TestMethod]
-	public async Task SaveChangesAsync_Sqlite_WithAutoDetectChangesShouldWorkProperly()
-	{
-		await this.SaveChangesAsyncWithAutoDetectChangesShouldWorkProperly(DatabaseProvider.Sqlite);
-	}
-
-	[TestMethod]
-	public async Task SaveChangesAsync_Sqlite_WithoutAutoDetectChangesShouldWorkProperly()
-	{
-		await this.SaveChangesAsyncWithoutAutoDetectChangesShouldWorkProperly(DatabaseProvider.Sqlite);
-	}
-
-	[TestMethod]
-	public async Task SaveChangesAsync_SqlServer_ShouldResolveCreatedAndGuidAndSaved()
-	{
-		await this.SaveChangesAsyncShouldResolveCreatedAndGuidAndSaved(DatabaseProvider.SqlServer);
-	}
-
-	[TestMethod]
-	public async Task SaveChangesAsync_SqlServer_WithAutoDetectChangesShouldWorkProperly()
-	{
-		await this.SaveChangesAsyncWithAutoDetectChangesShouldWorkProperly(DatabaseProvider.SqlServer);
-	}
-
-	[TestMethod]
-	public async Task SaveChangesAsync_SqlServer_WithoutAutoDetectChangesShouldWorkProperly()
-	{
-		await this.SaveChangesAsyncWithoutAutoDetectChangesShouldWorkProperly(DatabaseProvider.SqlServer);
-	}
-
 	protected internal virtual async Task SaveChangesAsyncShouldResolveCreatedAndGuidAndSaved(DatabaseProvider databaseProvider)
 	{
 		using(var serviceProvider = await this.CreateServiceProviderAsync(databaseProvider, true))
@@ -261,6 +177,42 @@ public class PlatinaContextTest
 		}
 
 		await DatabaseHelper.DeleteDatabasesAsync();
+	}
+
+	[TestMethod]
+	public async Task SaveChangesAsync_SqlServer_ShouldResolveCreatedAndGuidAndSaved()
+	{
+		await this.SaveChangesAsyncShouldResolveCreatedAndGuidAndSaved(DatabaseProvider.SqlServer);
+	}
+
+	[TestMethod]
+	public async Task SaveChangesAsync_SqlServer_WithAutoDetectChangesShouldWorkProperly()
+	{
+		await this.SaveChangesAsyncWithAutoDetectChangesShouldWorkProperly(DatabaseProvider.SqlServer);
+	}
+
+	[TestMethod]
+	public async Task SaveChangesAsync_SqlServer_WithoutAutoDetectChangesShouldWorkProperly()
+	{
+		await this.SaveChangesAsyncWithoutAutoDetectChangesShouldWorkProperly(DatabaseProvider.SqlServer);
+	}
+
+	[TestMethod]
+	public async Task SaveChangesAsync_Sqlite_ShouldResolveCreatedAndGuidAndSaved()
+	{
+		await this.SaveChangesAsyncShouldResolveCreatedAndGuidAndSaved(DatabaseProvider.Sqlite);
+	}
+
+	[TestMethod]
+	public async Task SaveChangesAsync_Sqlite_WithAutoDetectChangesShouldWorkProperly()
+	{
+		await this.SaveChangesAsyncWithAutoDetectChangesShouldWorkProperly(DatabaseProvider.Sqlite);
+	}
+
+	[TestMethod]
+	public async Task SaveChangesAsync_Sqlite_WithoutAutoDetectChangesShouldWorkProperly()
+	{
+		await this.SaveChangesAsyncWithoutAutoDetectChangesShouldWorkProperly(DatabaseProvider.Sqlite);
 	}
 
 	protected internal virtual void SaveChangesShouldResolveCreatedAndGuidAndSaved(DatabaseProvider databaseProvider)
@@ -369,15 +321,63 @@ public class PlatinaContextTest
 	}
 
 	[TestMethod]
-	public async Task Sqlite_Test()
+	public async Task SaveChanges_SqlServer_ShouldResolveCreatedAndGuidAndSaved()
 	{
-		await this.Test(DatabaseProvider.Sqlite);
+		await Task.CompletedTask;
+
+		this.SaveChangesShouldResolveCreatedAndGuidAndSaved(DatabaseProvider.SqlServer);
+	}
+
+	[TestMethod]
+	public async Task SaveChanges_SqlServer_WithAutoDetectChangesShouldWorkProperly()
+	{
+		await Task.CompletedTask;
+
+		this.SaveChangesWithAutoDetectChangesShouldWorkProperly(DatabaseProvider.SqlServer);
+	}
+
+	[TestMethod]
+	public async Task SaveChanges_SqlServer_WithoutAutoDetectChangesShouldWorkProperly()
+	{
+		await Task.CompletedTask;
+
+		this.SaveChangesWithoutAutoDetectChangesShouldWorkProperly(DatabaseProvider.SqlServer);
+	}
+
+	[TestMethod]
+	public async Task SaveChanges_Sqlite_ShouldResolveCreatedAndGuidAndSaved()
+	{
+		await Task.CompletedTask;
+
+		this.SaveChangesShouldResolveCreatedAndGuidAndSaved(DatabaseProvider.Sqlite);
+	}
+
+	[TestMethod]
+	public async Task SaveChanges_Sqlite_WithAutoDetectChangesShouldWorkProperly()
+	{
+		await Task.CompletedTask;
+
+		this.SaveChangesWithAutoDetectChangesShouldWorkProperly(DatabaseProvider.Sqlite);
+	}
+
+	[TestMethod]
+	public async Task SaveChanges_Sqlite_WithoutAutoDetectChangesShouldWorkProperly()
+	{
+		await Task.CompletedTask;
+
+		this.SaveChangesWithoutAutoDetectChangesShouldWorkProperly(DatabaseProvider.Sqlite);
 	}
 
 	[TestMethod]
 	public async Task SqlServer_Test()
 	{
 		await this.Test(DatabaseProvider.SqlServer);
+	}
+
+	[TestMethod]
+	public async Task Sqlite_Test()
+	{
+		await this.Test(DatabaseProvider.Sqlite);
 	}
 
 	protected internal virtual async Task Test(DatabaseProvider databaseProvider)

@@ -37,14 +37,14 @@ public static class ServiceCollectionExtension
 		return services;
 	}
 
-	public static IServiceCollection AddSqlitePlatinaContext(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction = null, ServiceLifetime contextLifetime = ServiceLifetime.Scoped, ServiceLifetime optionsLifetime = ServiceLifetime.Scoped)
-	{
-		return services.AddPlatinaContext<SqlitePlatinaContext>(optionsAction, contextLifetime, optionsLifetime);
-	}
-
 	public static IServiceCollection AddSqlServerPlatinaContext(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction = null, ServiceLifetime contextLifetime = ServiceLifetime.Scoped, ServiceLifetime optionsLifetime = ServiceLifetime.Scoped)
 	{
 		return services.AddPlatinaContext<SqlServerPlatinaContext>(optionsAction, contextLifetime, optionsLifetime);
+	}
+
+	public static IServiceCollection AddSqlitePlatinaContext(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction = null, ServiceLifetime contextLifetime = ServiceLifetime.Scoped, ServiceLifetime optionsLifetime = ServiceLifetime.Scoped)
+	{
+		return services.AddPlatinaContext<SqlitePlatinaContext>(optionsAction, contextLifetime, optionsLifetime);
 	}
 
 	#endregion
